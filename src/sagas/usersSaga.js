@@ -1,4 +1,4 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
+import { takeLatest, put, all } from 'redux-saga/effects';
 import { GET_USERS_SUCCESS, GET_USERS_FAILED, ADD_USER_SUCCESS, ADD_USER_FAILED } from '../constants/action_types'
 
 const API_URL = 'http://localhost:4000'
@@ -14,9 +14,10 @@ function* getUsers(action) {
     }
 }
 
-function* addUser(user) {
+function* addUser(action) {
     try {
-        const users = yield call(url1, { method: 'POST', data: user }).then(response => response.json());
+        debugger;
+        const users = yield fetch(url1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) });
         yield put({ type: ADD_USER_SUCCESS, payload: users });
     }
     catch (err) {

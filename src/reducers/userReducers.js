@@ -1,32 +1,28 @@
 import {
-    GET_USERS,
     GET_USERS_SUCCESS,
     GET_USERS_FAILED,
 
-    EDIT_USER,
+    ADD_USER_SUCCESS,
+    ADD_USER_FAILED,
+
     EDIT_USER_SUCCESS,
     EDIT_USER_FAILED,
 
-    DELETE_USER,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAILED,
 
-    LOGIN,
     LOGIN_SUCCESS,
     LOGIN_FAILED
 
 } from '../constants/action_types'
 
 const initialState = {
-    users: []
+    users: [],
+    userToAdd: {}
 };
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOGIN:
-            return {
-                ...state
-            }
 
         case LOGIN_SUCCESS:
             return {
@@ -34,11 +30,6 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case LOGIN_FAILED:
-            return {
-                ...state
-            }
-
-        case GET_USERS:
             return {
                 ...state
             }
@@ -53,7 +44,12 @@ const usersReducer = (state = initialState, action) => {
                 ...state
             }
 
-        case EDIT_USER:
+        case ADD_USER_SUCCESS:
+            return {
+                ...state
+            }
+
+        case ADD_USER_FAILED:
             return {
                 ...state
             }
@@ -64,11 +60,6 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case EDIT_USER_FAILED:
-            return {
-                ...state
-            }
-
-        case DELETE_USER:
             return {
                 ...state
             }

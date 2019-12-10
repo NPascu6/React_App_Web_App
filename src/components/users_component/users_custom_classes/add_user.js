@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Button} from 'react-bootstrap'
 import DatePicker from 'react-date-picker'
+import { addUserAction } from '../../../actions';
+import { connect } from "react-redux";
 
 class AddUser extends Component {
     constructor(props) {
@@ -28,6 +30,7 @@ class AddUser extends Component {
             EndDate: this.state.EndDate,
             RoleName: this.state.RoleName
         }
+        debugger;
         this.props.addUser(user);
     }
 
@@ -75,4 +78,12 @@ var formStyle = {
     "appearance": "none"
 }
 
-export default AddUser;
+const mapStateToProps = (state) => {
+    return { users: state.usersReducer.users };
+  };
+
+const mapDispatchToProps = dispatch => ({
+    addUser: (user) => dispatch(addUserAction(user)),
+  });
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddUser);
