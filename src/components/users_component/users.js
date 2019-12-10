@@ -39,6 +39,7 @@ class Users extends Component {
 
   enterAddComponent = () => {
     !this.state.addUser ? this.setState({ addUser: !this.state.addUser }) : this.setState({ addUser: this.state.addUser });
+    console.log(this.state.users)
   }
 
   componentDidMount() {

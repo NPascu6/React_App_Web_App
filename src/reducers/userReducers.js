@@ -1,10 +1,20 @@
 import {
+    GET_USERS,
     GET_USERS_SUCCESS,
     GET_USERS_FAILED,
-    GET_USERS,
+
     EDIT_USER,
+    EDIT_USER_SUCCESS,
+    EDIT_USER_FAILED,
+
     DELETE_USER,
-    LOGIN
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAILED,
+
+    LOGIN,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED
+
 } from '../constants/action_types'
 
 const initialState = {
@@ -14,17 +24,65 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN:
-            break;
+            return {
+                ...state
+            }
+
+        case LOGIN_SUCCESS:
+            return {
+                ...state
+            }
+
+        case LOGIN_FAILED:
+            return {
+                ...state
+            }
+
         case GET_USERS:
-            return { ...state }
+            return {
+                ...state
+            }
+
         case GET_USERS_SUCCESS:
-            return { users: action.payload.recordset }
+            return {
+                users: action.payload.recordset
+            }
+
         case GET_USERS_FAILED:
-            break;
+            return {
+                ...state
+            }
+
         case EDIT_USER:
-            break;
+            return {
+                ...state
+            }
+
+        case EDIT_USER_SUCCESS:
+            return {
+                ...state
+            }
+
+        case EDIT_USER_FAILED:
+            return {
+                ...state
+            }
+
         case DELETE_USER:
-            break;
+            return {
+                ...state
+            }
+
+        case DELETE_USER_SUCCESS:
+            return {
+                ...state
+            }
+
+        case DELETE_USER_FAILED:
+            return {
+                ...state
+            }
+
         default:
             return state;
     }

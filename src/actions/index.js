@@ -2,6 +2,17 @@ export const getUsersAction = () => ({
     type: 'GET_USERS',
 });
 
+export const addUserAction = () => ({
+    type: 'ADD_USER',
+});
+
+export const deleteUserAction = () => ({
+    type: 'DELETE_USER',
+});
+
+export const editUserAction = () => ({
+    type: 'EDIT_USER',
+});
 
 
 /*import axios from 'axios'

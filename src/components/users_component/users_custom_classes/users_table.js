@@ -5,41 +5,23 @@ import SearchField from './search_field';
 import AddUser from './add_user';
 
 class UsersTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: []
-        }
-    }
-
-    componentDidMount() {
-        //this.props.getUsers();
-    }
-
-    componentDidUpdate(previousProps) {
-        debugger;
-        if (this.props.users !== previousProps.users) {
-            this.setState({ users: this.props.users });
-        }
-    }
-
     render() {
         return (
             <div>
                 {
-                    this.state.addUser && !this.state.isEditMode ?
+                    this.props.addUser && !this.props.isEditMode ?
                         <AddUser
-                            data={this.state.users}
+                            data={this.props.users}
                             addUser={this.addUser} />
                         :
                         <Card>
                             <Card.Body>
                                 <h1>React Users</h1>
                                 <SearchField
-                                    data={this.state.users}
+                                    data={this.props.users}
                                     updateData={this.props.updateData} />
                                 {
-                                    !this.state.isEditMode && !this.state.addUser ?
+                                    !this.props.isEditMode && !this.props.addUser ?
                                         <Table striped bordered hover >
                                             <thead>
                                                 <tr>
@@ -55,7 +37,7 @@ class UsersTable extends Component {
                                             </thead>
                                             <tbody className="card-body">
                                                 {
-                                                    this.state.users.map((user) => (
+                                                    this.props.users.map((user) => (
                                                         <tr
                                                             onClick={this.props.handleEditModel}
                                                             key={user.userId}>
