@@ -50,7 +50,7 @@ class UsersTable extends Component {
                                                             <td className="card-title">{user.EndDate.substr(0, user.StartDate.indexOf('T'))}</td>
                                                             <td className="card-title">{user.RoleName}</td>
                                                             <td>
-                                                                <DeleteButton deleteUser={this.props.deleteUser} />
+                                                                <DeleteButton deleteUser={this.props.deleteUser}  />
                                                             </td>
                                                         </tr>
                                                     ))

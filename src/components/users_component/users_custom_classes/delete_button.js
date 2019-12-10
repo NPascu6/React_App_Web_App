@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button}  from 'react-bootstrap'
+import { Button}  from 'react-bootstrap';
 
 class DeleteButton extends Component {
 
@@ -7,6 +7,7 @@ class DeleteButton extends Component {
         let user = {
             userId: e.target.parentNode.parentNode.firstChild.innerText
         }
+        debugger;
         this.props.deleteUser(user);
     }
 

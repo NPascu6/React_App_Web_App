@@ -6,7 +6,7 @@ import EditUserModel from './users_custom_classes/edit_user_model';
 import UsersTable from './users_custom_classes/users_table';
 
 import { connect } from "react-redux";
-import { getUsersAction } from '../../actions';
+import { getUsersAction, deleteUserAction } from '../../actions';
 
 class Users extends Component {
 
@@ -44,6 +44,10 @@ class Users extends Component {
 
   componentDidMount() {
     this.props.getUsers();
+  }
+
+  deleteUser = (id) =>{
+    this.props.deleteUser(id);
   }
 
   componentDidUpdate(previousProps) {
@@ -126,6 +130,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(getUsersAction()),
+  deleteUser: (id) => dispatch(deleteUserAction(id))
 });
 
 
