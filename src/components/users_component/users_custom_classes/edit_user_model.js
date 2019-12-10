@@ -25,7 +25,6 @@ class EditUserModel extends Component {
             StartDate: this.state.StartDate,
             EndDate: this.state.EndDate
         }
-        debugger;
         this.props.editUser(user);
     }
 

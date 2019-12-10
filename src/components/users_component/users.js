@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import AddUser from './users_custom_classes/add_user'
-import EditUserModel from './users_custom_classes/edit_user_model'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap';
+
+import AddUser from './users_custom_classes/add_user';
+import EditUserModel from './users_custom_classes/edit_user_model';
 import UsersTable from './users_custom_classes/users_table';
 
-const API_URL = 'http://localhost:4000'
-const url1 = `${API_URL}/users`;
+import { connect } from "react-redux";
+import { getUsersAction } from '../../actions';
 
 class Users extends Component {
 
@@ -28,33 +28,6 @@ class Users extends Component {
     }
   }
 
-  getUsers = () => {
-    axios.get(url1).then(response => response.data)
-      .then((data) => {
-        this.setState({ users: data.recordset });
-      })
-  }
-
-  addUser = (data) => {
-    axios.post(url1, {
-      data
-    }).then(function (response) {
-      console.log(response);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  editUser = (user) => {
-    axios.put(url1, {
-      data: user
-    }).then(function (response) {
-      console.log(response);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
   updateData = (data) => {
     this.setState({ users: data });
   }
@@ -68,16 +41,17 @@ class Users extends Component {
     !this.state.addUser ? this.setState({ addUser: !this.state.addUser }) : this.setState({ addUser: this.state.addUser });
   }
 
-  deleteUser = (user) => {
-    axios.delete(url1, {
-      data: user
-    }).then(() => {
-      this.setState({ isEditMode: false, addUser: false });
-    })
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
+  componentDidUpdate(previousProps) {
+    if (this.props.users !== previousProps.users) {
+      this.setState({ users: this.props.users });
+    }
   }
 
   handleEditModel = (e) => {
-    debugger
     this.setState({
       isEditMode: !this.state.isEditMode,
       userId: e.currentTarget.childNodes[0].innerText,
@@ -116,7 +90,6 @@ class Users extends Component {
               !this.state.isEditMode ?
                 <UsersTable
                   users={this.state.users}
-                  getUsers={this.getUsers}
                   isEditMode={this.isEditMode}
                   addUser={this.addUser}
                   deleteUser={this.deleteUser}
@@ -145,4 +118,14 @@ class Users extends Component {
     );
   }
 }
-export default Users;
+
+const mapStateToProps = (state) => {
+  return { users: state.usersReducer.users };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getUsers: () => dispatch(getUsersAction()),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

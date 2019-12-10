@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button, Card, Container } from 'react-bootstrap';
-import axios from 'axios';
-
-const API_URL = 'http://localhost:4000'
-const url1 = `${API_URL}/login`;
 
 class Login extends Component {
     constructor(props) {
@@ -17,24 +13,6 @@ class Login extends Component {
             isAuthenticated: false
         }
     }
-
-    login = () => {
-        let user = {
-            userName: this.state.userName,
-            password: this.state.password,
-            email: this.state.email
-        }
-
-        axios.post(url1, {
-          data: user
-        }).then((response) =>{
-            debugger;
-          this.props.authenticated = true;
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
-
 
     render() {
         return (

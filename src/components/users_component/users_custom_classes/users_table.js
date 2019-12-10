@@ -13,10 +13,11 @@ class UsersTable extends Component {
     }
 
     componentDidMount() {
-        this.props.getUsers();
+        //this.props.getUsers();
     }
 
     componentDidUpdate(previousProps) {
+        debugger;
         if (this.props.users !== previousProps.users) {
             this.setState({ users: this.props.users });
         }
