@@ -6,46 +6,23 @@ class SearcField extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filtered: []
+            filter: ""
         }
     }
 
-    componentDidMount() {
+    handleChange = (event) => {
         this.setState({
-            filtered: this.props.data
+            filter: event.target.value
         })
-    }
-
-    filterTable = (e) => {
-        let currentList = [];
-        let newList = [];
-
-        if (e.key === "Enter") {
-            currentList = this.props.data;
-            newList = currentList.filter(item => item.userId === parseInt(e.target.value));
-            if(newList.length === 0)
-            newList = currentList.filter(item => item.userName.toLowerCase() === e.target.value.toLowerCase());
-            if(newList.length === 0)
-            newList = currentList.filter(item => item.FirstName.toLowerCase() === e.target.value.toLowerCase());
-            if(newList.length === 0)
-            newList = currentList.filter(item => item.LastName.toLowerCase() === e.target.value.toLowerCase());
-        } else {
-            newList = this.props.items;
-        }
-
-        if (newList && newList.length > 0) {
-            this.props.updateData(newList);
-        }
-        else {
-            return null;
-        }
+        debugger;
+        this.props.filterUser(event.target.value);
     }
 
     render() {
         return (
             <div>
                 <InputGroup size="lg" className="mb-3">
-                    <FormControl placeholder="Search db here..." onKeyUp={this.filterTable}/>
+                    <FormControl placeholder="Search db here..." onChange={this.handleChange} value={this.state.filter} />
                 </InputGroup>
             </div>
         )

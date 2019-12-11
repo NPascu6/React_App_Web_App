@@ -45,13 +45,11 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case ADD_USER_SUCCESS:
-            debugger;
             return {
                 ...state
             }
 
         case ADD_USER_FAILED:
-            debugger;
             return {
                 ...state
             }

@@ -15,6 +15,7 @@ class Users extends Component {
 
     this.state = {
       users: [],
+      filteredUsers: [],
       isAddMode: false,
       isEditMode: false,
       userModel: {
@@ -29,13 +30,15 @@ class Users extends Component {
       }
     }
   }
-  componentDidMount() {
+
+  componentWillMount() {
     this.props.getUsers();
   }
 
   componentDidUpdate(previousProps) {
     if (this.props.users !== previousProps.users) {
       this.setState({ users: this.props.users });
+      this.setState({ filteredUsers: this.props.users });
     }
   }
 
@@ -45,18 +48,20 @@ class Users extends Component {
   }
 
   enterEditComponent = (action) => {
-    let userId = parseInt(action.currentTarget.firstChild.innerText);
+    let userId = parseInt(action.currentTarget.parentElement.firstChild.innerText);
 
-    !this.state.isEditMode ? this.setState({
-      isEditMode: !this.state.isEditMode,
-      userModel: this.state.users.filter(element => element.userId === userId)
-    })
-      : this.setState({ isEditMode: this.state.isEditMode });
+    !this.state.isEditMode ?
+      this.setState({
+        isEditMode: !this.state.isEditMode,
+        userModel: this.state.users.filter(element => element.userId === userId)
+      })
+      :
+      this.setState({ isEditMode: this.state.isEditMode });
   }
 
   backToUserComponent = () => {
     this.state.isAddMode ? this.setState({ isAddMode: !this.state.isAddMode }) : this.setState({ isAddMode: this.state.isAddMode });
-    this.state.isEditMode ? this.setState({ isEditMode: !this.state.isEditMode }) : this.setState({ adisEditModedUser: this.state.isEditMode });
+    this.state.isEditMode ? this.setState({ isEditMode: !this.state.isEditMode }) : this.setState({ isEditMode: this.state.isEditMode });
   }
 
   deleteUser = (user) => {
@@ -70,9 +75,21 @@ class Users extends Component {
   }
 
   editUser = (user) => {
-    debugger;
     this.props.editUser(user);
     this.setState({ isEditMode: false })
+  }
+
+  filterTable = (filter) => {
+    debugger;
+    let filteredUsers = this.state.users
+    filteredUsers = filteredUsers.filter((user) => {
+      let userName = user.FirstName.toLowerCase() + user.LastName.toLowerCase()
+      return userName.indexOf(
+        filter.toLowerCase()) !== -1
+    })
+    this.setState({
+      filteredUsers
+    })
   }
 
   render() {
@@ -92,7 +109,7 @@ class Users extends Component {
           </Button>
           }
           {
-            this.state.addUser ?
+            this.state.isAddMode ?
               <AddUser
                 data={this.state.users}
                 addUser={this.addUser} />
@@ -100,6 +117,8 @@ class Users extends Component {
               !this.state.isEditMode ?
                 <UsersTable
                   users={this.state.users}
+                  filteredUsers={this.state.filteredUsers}
+                  filterTable={this.filterTable}
                   isEditMode={this.isEditMode}
                   isAddMode={this.isAddMode}
                   deleteUser={this.deleteUser}
@@ -114,7 +133,7 @@ class Users extends Component {
             <EditUserModel
               userModel={this.state.userModel}
               editUser={this.editUser}
-              users = {this.state.users}
+              users={this.state.users}
             />
             : null
         }
