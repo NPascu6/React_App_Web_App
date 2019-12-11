@@ -1,44 +1,48 @@
 import React, { Component } from 'react'
-import { Form, Button} from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import DatePicker from 'react-date-picker'
-import { addUserAction } from '../../../actions';
-import { connect } from "react-redux";
 
 class AddUser extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            userId:"",
+            userId: "",
             FirstName: "",
             LastName: "",
             StartDate: "",
             EndDate: "",
             RoleName: "",
-            email:"",
-            userName:""
+            email: "",
+            userName: "",
+            users: []
         }
+    }
+
+    componentDidMount() {
+        this.setState({ users: this.props.data });
     }
 
     handleSubmit = () => {
         let user = {
-            userName:this.state.userName,
+            userName: this.state.userName,
             email: this.state.email,
             FirstName: this.state.FirstName,
             LastName: this.state.LastName,
             StartDate: this.state.StartDate,
             EndDate: this.state.EndDate,
-            RoleName: this.state.RoleName
+            RoleName: this.state.RoleName,
         }
-        debugger;
         this.props.addUser(user);
+        parseInt(user.RoleName) === 1 ? user.RoleName = 'admin' : user.RoleName = 'user';
+        this.state.users.push(user);
     }
 
     render() {
         return (
             <div className="container card">
                 <Form onSubmit={this.handleSubmit}>
-                <Form.Group>
+                    <Form.Group>
                         <Form.Label>User Name</Form.Label>
                         <Form.Control style={formStyle} onChange={(event) => this.setState({ userName: event.target.value })} />
                     </Form.Group>
@@ -60,7 +64,7 @@ class AddUser extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label >End Date</Form.Label>
-                        <DatePicker style={formStyle} value={this.state.EndDate}  onChange={EndDate => this.setState({ EndDate })} />
+                        <DatePicker style={formStyle} value={this.state.EndDate} onChange={EndDate => this.setState({ EndDate })} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Role Id</Form.Label>
@@ -78,12 +82,4 @@ var formStyle = {
     "appearance": "none"
 }
 
-const mapStateToProps = (state) => {
-    return { users: state.usersReducer.users };
-  };
-
-const mapDispatchToProps = dispatch => ({
-    addUser: (user) => dispatch(addUserAction(user)),
-  });
-
-export default connect(mapStateToProps,mapDispatchToProps)(AddUser);
+export default AddUser;

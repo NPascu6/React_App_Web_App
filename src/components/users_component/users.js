@@ -6,7 +6,7 @@ import EditUserModel from './users_custom_classes/edit_user_model';
 import UsersTable from './users_custom_classes/users_table';
 
 import { connect } from "react-redux";
-import { getUsersAction } from '../../actions';
+import { getUsersAction, deleteUserAction, addUserAction } from '../../actions';
 
 class Users extends Component {
 
@@ -15,7 +15,7 @@ class Users extends Component {
 
     this.state = {
       users: [],
-      addUser: false,
+      isAddMode: false,
       isEditMode: false,
       userId: '',
       userName: '',
@@ -26,10 +26,6 @@ class Users extends Component {
       EndDate: new Date(),
       RoleName: ''
     }
-  }
-
-  updateData = (data) => {
-    this.setState({ users: data });
   }
 
   backToUserComponent = () => {
@@ -52,18 +48,14 @@ class Users extends Component {
     }
   }
 
-  handleEditModel = (e) => {
-    this.setState({
-      isEditMode: !this.state.isEditMode,
-      userId: e.currentTarget.childNodes[0].innerText,
-      userName: e.currentTarget.childNodes[1].innerText,
-      email: e.currentTarget.childNodes[2].innerText,
-      FirstName: e.currentTarget.childNodes[3].innerText,
-      LastName: e.currentTarget.childNodes[4].innerText,
-      StartDate: e.currentTarget.childNodes[5].innerText,
-      EndDate: e.currentTarget.childNodes[6].innerText,
-      RoleName: e.currentTarget.childNodes[7].innerText
-    });
+  deleteUser = (user) => {
+    this.props.deleteUser(user);
+    this.setState({ users: this.state.users.filter(userItem => userItem.userId !== parseInt(user.userId)) });
+  }
+
+  addUser = (user) => {
+    this.props.addUser(user);
+    this.setState({ addUser: false });
   }
 
   render() {
@@ -92,7 +84,7 @@ class Users extends Component {
                 <UsersTable
                   users={this.state.users}
                   isEditMode={this.isEditMode}
-                  addUser={this.addUser}
+                  isAddMode={this.isAddMode}
                   deleteUser={this.deleteUser}
                   handleEditModel={this.handleEditModel}
                   updateData={this.updateData}
@@ -126,6 +118,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(getUsersAction()),
+  deleteUser: (user) => dispatch(deleteUserAction(user)),
+  addUser: (user) => dispatch(addUserAction(user))
 });
 
 

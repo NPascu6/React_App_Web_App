@@ -7,12 +7,14 @@ export const addUserAction = (user) => ({
     payload: user
 });
 
-export const deleteUserAction = () => ({
+export const deleteUserAction = (user) => ({
     type: 'DELETE_USER',
+    payload: user
 });
 
-export const editUserAction = () => ({
+export const editUserAction = (user) => ({
     type: 'EDIT_USER',
+    payload: user
 });
 
 
