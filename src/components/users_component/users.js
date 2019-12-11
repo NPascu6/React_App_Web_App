@@ -6,7 +6,7 @@ import EditUserModel from './users_custom_classes/edit_user_model';
 import UsersTable from './users_custom_classes/users_table';
 
 import { connect } from "react-redux";
-import { getUsersAction, deleteUserAction, addUserAction } from '../../actions';
+import { getUsersAction, deleteUserAction, addUserAction, editUserAction } from '../../actions';
 
 class Users extends Component {
 
@@ -17,27 +17,18 @@ class Users extends Component {
       users: [],
       isAddMode: false,
       isEditMode: false,
-      userId: '',
-      userName: '',
-      email: '',
-      FirstName: '',
-      LastName: '',
-      StartDate: new Date(),
-      EndDate: new Date(),
-      RoleName: ''
+      userModel: {
+        userId: '',
+        userName: '',
+        email: '',
+        FirstName: '',
+        LastName: '',
+        StartDate: new Date(),
+        EndDate: new Date(),
+        RoleName: ''
+      }
     }
   }
-
-  backToUserComponent = () => {
-    this.state.addUser ? this.setState({ addUser: !this.state.addUser }) : this.setState({ addUser: this.state.addUser });
-    this.state.isEditMode ? this.setState({ isEditMode: !this.state.isEditMode }) : this.setState({ adisEditModedUser: this.state.isEditMode });
-  }
-
-  enterAddComponent = () => {
-    !this.state.addUser ? this.setState({ addUser: !this.state.addUser }) : this.setState({ addUser: this.state.addUser });
-    console.log(this.state.users)
-  }
-
   componentDidMount() {
     this.props.getUsers();
   }
@@ -48,6 +39,26 @@ class Users extends Component {
     }
   }
 
+  enterAddComponent = () => {
+    !this.state.isAddMode ? this.setState({ isAddMode: !this.state.isAddMode }) : this.setState({ isAddMode: this.state.isAddMode });
+    console.log(this.state.users)
+  }
+
+  enterEditComponent = (action) => {
+    let userId = parseInt(action.currentTarget.firstChild.innerText);
+
+    !this.state.isEditMode ? this.setState({
+      isEditMode: !this.state.isEditMode,
+      userModel: this.state.users.filter(element => element.userId === userId)
+    })
+      : this.setState({ isEditMode: this.state.isEditMode });
+  }
+
+  backToUserComponent = () => {
+    this.state.isAddMode ? this.setState({ isAddMode: !this.state.isAddMode }) : this.setState({ isAddMode: this.state.isAddMode });
+    this.state.isEditMode ? this.setState({ isEditMode: !this.state.isEditMode }) : this.setState({ adisEditModedUser: this.state.isEditMode });
+  }
+
   deleteUser = (user) => {
     this.props.deleteUser(user);
     this.setState({ users: this.state.users.filter(userItem => userItem.userId !== parseInt(user.userId)) });
@@ -55,7 +66,13 @@ class Users extends Component {
 
   addUser = (user) => {
     this.props.addUser(user);
-    this.setState({ addUser: false });
+    this.setState({ isAddMode: false });
+  }
+
+  editUser = (user) => {
+    debugger;
+    this.props.editUser(user);
+    this.setState({ isEditMode: false })
   }
 
   render() {
@@ -63,7 +80,7 @@ class Users extends Component {
       <div className="container" >
         <Card>
           {
-            this.state.addUser || this.state.isEditMode ?
+            this.state.isAddMode || this.state.isEditMode ?
               <Button
                 variant="success"
                 onClick={this.backToUserComponent}>Back to User List
@@ -86,7 +103,7 @@ class Users extends Component {
                   isEditMode={this.isEditMode}
                   isAddMode={this.isAddMode}
                   deleteUser={this.deleteUser}
-                  handleEditModel={this.handleEditModel}
+                  handleEditModel={this.enterEditComponent}
                   updateData={this.updateData}
                 />
                 : null
@@ -95,15 +112,9 @@ class Users extends Component {
         {
           this.state.isEditMode ?
             <EditUserModel
-              userId={this.state.userId}
-              userName={this.state.userName}
-              email={this.state.email}
-              FirstName={this.state.FirstName}
-              LastName={this.state.LastName}
-              StartDate={this.state.StartDate}
-              EndDate={this.state.EndDate}
-              RoleName={this.state.RoleName}
+              userModel={this.state.userModel}
               editUser={this.editUser}
+              users = {this.state.users}
             />
             : null
         }
@@ -119,7 +130,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(getUsersAction()),
   deleteUser: (user) => dispatch(deleteUserAction(user)),
-  addUser: (user) => dispatch(addUserAction(user))
+  addUser: (user) => dispatch(addUserAction(user)),
+  editUser: (user) => dispatch(editUserAction(user))
 });
 
 

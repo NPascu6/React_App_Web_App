@@ -1,5 +1,14 @@
 import { takeLatest, put, all } from 'redux-saga/effects';
-import { GET_USERS_SUCCESS, GET_USERS_FAILED, ADD_USER_SUCCESS, ADD_USER_FAILED, DELETE_USER_SUCCESS, DELETE_USER_FAILED } from '../constants/action_types'
+import {
+    GET_USERS_SUCCESS,
+    GET_USERS_FAILED,
+    ADD_USER_SUCCESS,
+    ADD_USER_FAILED,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAILED,
+    EDIT_USER_SUCCESS,
+    EDIT_USER_FAILED
+} from '../constants/action_types'
 
 const API_URL = 'http://localhost:4000'
 const url1 = `${API_URL}/users`;
@@ -34,10 +43,22 @@ function* deleteUser(action) {
     }
 }
 
+function* editUser(action) {
+    debugger;
+    try {
+        const users = yield fetch(url1, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
+        yield put({ type: EDIT_USER_SUCCESS, payload: users });
+    }
+    catch (err) {
+        yield put({ type: EDIT_USER_FAILED, payload: err, error: true });
+    }
+}
+
 function* actionWatcher() {
     yield takeLatest('GET_USERS', getUsers);
     yield takeLatest('ADD_USER', addUser);
-    yield takeLatest('DELETE_USER', deleteUser)
+    yield takeLatest('DELETE_USER', deleteUser);
+    yield takeLatest('EDIT_USER', editUser);
 }
 
 export default function* usersSaga() {

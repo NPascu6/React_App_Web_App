@@ -6,14 +6,11 @@ class EditUserModel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: '',
-            userName:"",
-            email:"",
-            FirstName: '',
+            userId: "",
+            FirstName: "",
             LastName: "",
-            StartDate: new Date(),
-            EndDate: new Date(),
-            RoleName: ''
+            StartDate: "",
+            EndDate: ""
         }
     }
 
@@ -25,15 +22,27 @@ class EditUserModel extends Component {
             StartDate: this.state.StartDate,
             EndDate: this.state.EndDate
         }
+        
+        for(let item in this.props.users){
+            debugger;
+            if(parseInt(this.props.users[item].userId) === user.userId){
+                debugger;
+                this.props.users[item].FirstName = user.FirstName;
+                this.props.users[item].LastName = user.LastName;
+                this.props.users[item].StartDate = user.StartDate;
+                this.props.users[item].EndDate = user.EndDate;
+            }
+        }
+
         this.props.editUser(user);
     }
 
     componentDidMount() {
-        this.setState({ userId: this.props.userId });
-        this.setState({ FirstName: this.props.FirstName });
-        this.setState({ LastName: this.props.LastName });
-        this.setState({ StartDate: new Date(this.props.StartDate) });
-        this.setState({ EndDate: new Date(this.props.EndDate) });
+        this.setState({ userId: this.props.userModel[0].userId });
+        this.setState({ FirstName: this.props.userModel[0].FirstName });
+        this.setState({ LastName: this.props.userModel[0].LastName });
+        this.setState({ StartDate: new Date(this.props.userModel[0].StartDate) });
+        this.setState({ EndDate: new Date(this.props.userModel[0].EndDate) });
     }
 
     render() {
