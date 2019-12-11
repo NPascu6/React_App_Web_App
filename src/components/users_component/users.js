@@ -7,6 +7,7 @@ import UsersTable from './users_custom_classes/users_table';
 
 import { connect } from "react-redux";
 import { getUsersAction, deleteUserAction, addUserAction, editUserAction } from '../../actions';
+import NavigationHeader from '../navigation_component/navigationHeader';
 
 class Users extends Component {
 
@@ -31,7 +32,7 @@ class Users extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUsers();
   }
 
@@ -44,7 +45,6 @@ class Users extends Component {
 
   enterAddComponent = () => {
     !this.state.isAddMode ? this.setState({ isAddMode: !this.state.isAddMode }) : this.setState({ isAddMode: this.state.isAddMode });
-    console.log(this.state.users)
   }
 
   enterEditComponent = (action) => {
@@ -66,7 +66,7 @@ class Users extends Component {
 
   deleteUser = (user) => {
     this.props.deleteUser(user);
-    this.setState({ users: this.state.users.filter(userItem => userItem.userId !== parseInt(user.userId)) });
+    this.setState({ filteredUsers: this.state.filteredUsers.filter(userItem => userItem.userId !== parseInt(user.userId)) });
   }
 
   addUser = (user) => {
@@ -95,6 +95,7 @@ class Users extends Component {
   render() {
     return (
       <div className="container" >
+        <NavigationHeader />
         <Card>
           {
             this.state.isAddMode || this.state.isEditMode ?
@@ -111,7 +112,7 @@ class Users extends Component {
           {
             this.state.isAddMode ?
               <AddUser
-                data={this.state.users}
+                data={this.state.filteredUsers}
                 addUser={this.addUser} />
               :
               !this.state.isEditMode ?

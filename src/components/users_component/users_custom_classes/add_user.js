@@ -20,7 +20,7 @@ class AddUser extends Component {
     }
 
     componentDidMount() {
-        this.setState({ users: this.props.data });
+        this.setState({ users: this.props.users });
     }
 
     handleSubmit = () => {
@@ -35,7 +35,7 @@ class AddUser extends Component {
         }
         this.props.addUser(user);
         parseInt(user.RoleName) === 1 ? user.RoleName = 'admin' : user.RoleName = 'user';
-        this.state.users.push(user);
+        this.props.data.push(user);
     }
 
     render() {

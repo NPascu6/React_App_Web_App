@@ -33,7 +33,6 @@ class EditUserModel extends Component {
                 this.props.users[item].EndDate = user.EndDate;
             }
         }
-
         this.props.editUser(user);
     }
 
