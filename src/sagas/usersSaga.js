@@ -60,8 +60,9 @@ function* editUser(action) {
 function* login(action) {
     debugger;
     try {
-        yield fetch(url2, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
-        yield put({ type: LOGIN_SUCCESS });
+        var user = yield fetch(url2, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
+        debugger;
+        user.rowsAffected[0] === 1 ? yield put({ type: LOGIN_SUCCESS, payload:  user}) : yield put({ type: LOGIN_FAILED, payload: "Authentification failed"});
     }
     catch (err) {
         yield put({ type: LOGIN_FAILED, payload: err, error: true });

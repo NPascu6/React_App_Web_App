@@ -18,8 +18,8 @@ import {
 
 const initialState = {
     users: [],
-    userToAdd: {},
-    isAuthenticated: false
+    isAuthenticated: false,
+    error: ""
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -32,7 +32,7 @@ const usersReducer = (state = initialState, action) => {
 
         case LOGIN_FAILED:
             return {
-                ...state
+                error: action.payload 
             }
 
         case GET_USERS_SUCCESS:
@@ -42,7 +42,7 @@ const usersReducer = (state = initialState, action) => {
 
         case GET_USERS_FAILED:
             return {
-                ...state
+                error: action.payload 
             }
 
         case ADD_USER_SUCCESS:
@@ -52,7 +52,7 @@ const usersReducer = (state = initialState, action) => {
 
         case ADD_USER_FAILED:
             return {
-                ...state
+                error: action.payload 
             }
 
         case EDIT_USER_SUCCESS:
@@ -62,7 +62,7 @@ const usersReducer = (state = initialState, action) => {
 
         case EDIT_USER_FAILED:
             return {
-                ...state
+                error: action.payload 
             }
 
         case DELETE_USER_SUCCESS:
@@ -72,7 +72,7 @@ const usersReducer = (state = initialState, action) => {
 
         case DELETE_USER_FAILED:
             return {
-                ...state
+                error: action.payload 
             }
 
         default:
