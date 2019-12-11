@@ -1,8 +1,20 @@
 import { takeLatest, put, all } from 'redux-saga/effects';
-import { GET_USERS_SUCCESS, GET_USERS_FAILED, ADD_USER_SUCCESS, ADD_USER_FAILED, DELETE_USER_SUCCESS, DELETE_USER_FAILED } from '../constants/action_types'
+import {
+    GET_USERS_SUCCESS,
+    GET_USERS_FAILED,
+    ADD_USER_SUCCESS,
+    ADD_USER_FAILED,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAILED,
+    EDIT_USER_SUCCESS,
+    EDIT_USER_FAILED,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED
+} from '../constants/action_types'
 
 const API_URL = 'http://localhost:4000'
 const url1 = `${API_URL}/users`;
+const url2 = `${API_URL}/login`;
 
 function* getUsers() {
     try {
@@ -16,9 +28,8 @@ function* getUsers() {
 
 function* addUser(action) {
     try {
-        debugger;
-        const users = yield fetch(url1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) });
-        yield put({ type: ADD_USER_SUCCESS, payload: users });
+        yield fetch(url1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
+        yield put({ type: ADD_USER_SUCCESS });
     }
     catch (err) {
         yield put({ type: ADD_USER_FAILED, payload: err, error: true });
@@ -27,9 +38,8 @@ function* addUser(action) {
 
 function* deleteUser(action) {
     try {
-        debugger;
-        const users = yield fetch(url1, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) });
-        yield put({ type: DELETE_USER_SUCCESS, payload: users });
+        yield fetch(url1, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
+        yield put({ type: DELETE_USER_SUCCESS });
     }
     catch (err) {
         yield put({ type: DELETE_USER_FAILED, payload: err, error: true });
@@ -37,24 +47,25 @@ function* deleteUser(action) {
 }
 
 function* editUser(action) {
+    debugger;
     try {
-        debugger;
-        const users = yield fetch(url1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) });
-        yield put({ type: ADD_USER_SUCCESS, payload: users });
+        yield fetch(url1, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
+        yield put({ type: EDIT_USER_SUCCESS });
     }
     catch (err) {
-        yield put({ type: ADD_USER_FAILED, payload: err, error: true });
+        yield put({ type: EDIT_USER_FAILED, payload: err, error: true });
     }
 }
 
 function* login(action) {
+    debugger;
     try {
+        var user = yield fetch(url2, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
         debugger;
-        const users = yield fetch(url1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) });
-        yield put({ type: ADD_USER_SUCCESS, payload: users });
+        user.rowsAffected[0] === 1 ? yield put({ type: LOGIN_SUCCESS, payload:  user}) : yield put({ type: LOGIN_FAILED, payload: "Authentification failed"});
     }
     catch (err) {
-        yield put({ type: ADD_USER_FAILED, payload: err, error: true });
+        yield put({ type: LOGIN_FAILED, payload: err, error: true });
     }
 }
 

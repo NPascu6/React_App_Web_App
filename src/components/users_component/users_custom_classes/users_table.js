@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import { Table, Card } from 'react-bootstrap';
 import DeleteButton from './delete_button';
 import SearchField from './search_field';
-import AddUser from './add_user';
 
 class UsersTable extends Component {
+
     render() {
         return (
             <div>
                 {
-                    this.props.addUser && !this.props.isEditMode ?
-                        <AddUser
-                            data={this.props.users}
-                            addUser={this.addUser} />
-                        :
+                    !this.props.isAddMode && !this.props.isEditMode ?
                         <Card>
                             <Card.Body>
                                 <h1>React Users</h1>
                                 <SearchField
-                                    data={this.props.users}
-                                    updateData={this.props.updateData} />
+                                    filterUser={this.props.filterTable} />
                                 {
                                     !this.props.isEditMode && !this.props.addUser ?
                                         <Table striped bordered hover >
@@ -37,20 +32,18 @@ class UsersTable extends Component {
                                             </thead>
                                             <tbody className="card-body">
                                                 {
-                                                    this.props.users.map((user) => (
-                                                        <tr
-                                                            onClick={this.props.handleEditModel}
-                                                            key={user.userId}>
+                                                    this.props.filteredUsers.map((user) => (
+                                                        <tr key={user.userId}>
                                                             <td hidden className="card-title">{user.userId}</td>
-                                                            <td className="card-title">{user.userName}</td>
-                                                            <td className="card-title">{user.email}</td>
-                                                            <td className="card-title">{user.FirstName}</td>
-                                                            <td className="card-title">{user.LastName}</td>
-                                                            <td className="card-title">{user.StartDate.substr(0, user.StartDate.indexOf('T'))}</td>
-                                                            <td className="card-title">{user.EndDate.substr(0, user.StartDate.indexOf('T'))}</td>
-                                                            <td className="card-title">{user.RoleName}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{user.userName}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{user.email}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{user.FirstName}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{user.LastName}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{new Date(user.StartDate).toUTCString()}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{new Date(user.EndDate).toUTCString()}</td>
+                                                            <td onClick={this.props.handleEditModel} className="card-title">{user.RoleName}</td>
                                                             <td>
-                                                                <DeleteButton deleteUser={this.props.deleteUser}  />
+                                                                <DeleteButton deleteUser={this.props.deleteUser} users={this.props.users} />
                                                             </td>
                                                         </tr>
                                                     ))
@@ -61,7 +54,7 @@ class UsersTable extends Component {
                                 }
                             </Card.Body>
                         </Card>
-                }
+                        : null}
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button}  from 'react-bootstrap';
+import { Button } from 'react-bootstrap'
 
 class DeleteButton extends Component {
 
@@ -11,8 +11,8 @@ class DeleteButton extends Component {
         this.props.deleteUser(user);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <Button variant="danger" onClick={this.handleSubmit}>Remove User</Button>
         )
     }
