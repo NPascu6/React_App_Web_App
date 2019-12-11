@@ -37,7 +37,6 @@ class Users extends Component {
   }
 
   componentDidUpdate(previousProps) {
-    debugger;
     if (this.props.users !== previousProps.users) {
       this.setState({ users: this.props.users });
       this.setState({ filteredUsers: this.props.users });
@@ -54,7 +53,7 @@ class Users extends Component {
     !this.state.isEditMode ?
       this.setState({
         isEditMode: !this.state.isEditMode,
-        userModel: this.state.users.filter(element => element.userId === userId)
+        userModel: this.state.filteredUsers.filter(element => element.userId === userId)
       })
       :
       this.setState({ isEditMode: this.state.isEditMode });
@@ -72,7 +71,10 @@ class Users extends Component {
 
   addUser = (user) => {
     this.props.addUser(user);
-    this.setState({ isAddMode: false });
+    this.setState({
+      isAddMode: false,
+      filteredUsers: this.state.filteredUsers.push(user)
+    });
   }
 
   editUser = (user) => {
@@ -81,7 +83,6 @@ class Users extends Component {
   }
 
   filterTable = (filter) => {
-    debugger;
     let filteredUsers = this.state.users
     filteredUsers = filteredUsers.filter((user) => {
       let userName = user.FirstName.toLowerCase() + user.LastName.toLowerCase()
@@ -135,7 +136,7 @@ class Users extends Component {
             <EditUserModel
               userModel={this.state.userModel}
               editUser={this.editUser}
-              users={this.state.users}
+              users={this.state.filteredUsers}
             />
             : null
         }

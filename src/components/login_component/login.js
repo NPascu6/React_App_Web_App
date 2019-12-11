@@ -18,7 +18,6 @@ class Login extends Component {
     }
 
     login = () =>{
-        debugger;
         let userCredentials = {
             userName: this.state.userName,
             email: this.state.email,
@@ -29,7 +28,6 @@ class Login extends Component {
     }
 
     componentDidUpdate(previousProps) {
-        debugger;
         if (this.props.isAuthenticated !== previousProps.isAuthenticated) {
           this.setState({ isAuthenticated: this.props.isAuthenticated });
         }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Card } from 'react-bootstrap';
+
 import DeleteButton from './delete_button';
 import SearchField from './search_field';
 
@@ -43,7 +44,7 @@ class UsersTable extends Component {
                                                             <td onClick={this.props.handleEditModel} className="card-title">{new Date(user.EndDate).toUTCString()}</td>
                                                             <td onClick={this.props.handleEditModel} className="card-title">{user.RoleName}</td>
                                                             <td>
-                                                                <DeleteButton deleteUser={this.props.deleteUser} users={this.props.users} />
+                                                                <DeleteButton deleteUser={this.props.deleteUser}/>
                                                             </td>
                                                         </tr>
                                                     ))

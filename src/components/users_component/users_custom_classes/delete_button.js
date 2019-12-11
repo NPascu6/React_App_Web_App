@@ -7,7 +7,6 @@ class DeleteButton extends Component {
         let user = {
             userId: e.target.parentNode.parentNode.firstChild.innerText
         }
-        debugger;
         this.props.deleteUser(user);
     }
 

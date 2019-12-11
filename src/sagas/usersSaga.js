@@ -47,7 +47,6 @@ function* deleteUser(action) {
 }
 
 function* editUser(action) {
-    debugger;
     try {
         yield fetch(url1, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
         yield put({ type: EDIT_USER_SUCCESS });
@@ -58,11 +57,9 @@ function* editUser(action) {
 }
 
 function* login(action) {
-    debugger;
     try {
         var user = yield fetch(url2, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(action.payload) }).then(response => response.json());
-        debugger;
-        user.rowsAffected[0] === 1 ? yield put({ type: LOGIN_SUCCESS, payload:  user}) : yield put({ type: LOGIN_FAILED, payload: "Authentification failed"});
+        user.rowsAffected[0] === 1 ? yield put({ type: LOGIN_SUCCESS, payload: user }) : yield put({ type: LOGIN_FAILED, payload: "Authentification failed" });
     }
     catch (err) {
         yield put({ type: LOGIN_FAILED, payload: err, error: true });

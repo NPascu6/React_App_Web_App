@@ -20,11 +20,12 @@ class AddUser extends Component {
     }
 
     componentDidMount() {
-        this.setState({ users: this.props.users });
+        this.setState({ users: this.props.filteredUsers });
     }
 
     handleSubmit = () => {
         let user = {
+            userId: "",
             userName: this.state.userName,
             email: this.state.email,
             FirstName: this.state.FirstName,

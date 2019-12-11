@@ -14,7 +14,6 @@ class SearcField extends Component {
         this.setState({
             filter: event.target.value
         })
-        debugger;
         this.props.filterUser(event.target.value);
     }
 

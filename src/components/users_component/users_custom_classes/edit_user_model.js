@@ -24,9 +24,7 @@ class EditUserModel extends Component {
         }
         
         for(let item in this.props.users){
-            debugger;
             if(parseInt(this.props.users[item].userId) === user.userId){
-                debugger;
                 this.props.users[item].FirstName = user.FirstName;
                 this.props.users[item].LastName = user.LastName;
                 this.props.users[item].StartDate = user.StartDate;
