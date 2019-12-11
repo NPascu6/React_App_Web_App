@@ -37,6 +37,7 @@ class Users extends Component {
   }
 
   componentDidUpdate(previousProps) {
+    debugger;
     if (this.props.users !== previousProps.users) {
       this.setState({ users: this.props.users });
       this.setState({ filteredUsers: this.props.users });

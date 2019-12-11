@@ -18,7 +18,8 @@ import {
 
 const initialState = {
     users: [],
-    userToAdd: {}
+    userToAdd: {},
+    isAuthenticated: false
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -26,7 +27,7 @@ const usersReducer = (state = initialState, action) => {
 
         case LOGIN_SUCCESS:
             return {
-                ...state
+                isAuthenticated: true
             }
 
         case LOGIN_FAILED:

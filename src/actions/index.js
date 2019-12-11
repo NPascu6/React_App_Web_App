@@ -16,3 +16,8 @@ export const editUserAction = (user) => ({
     type: 'EDIT_USER',
     payload: user
 });
+
+export const loginAction = (user) => ({
+    type: 'LOGIN',
+    payload: user
+});
