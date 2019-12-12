@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 
 import usersReducer from '../reducers/userReducers';
+import navigationReducer from '../reducers/navigationReducers';
 import rootSaga from '../sagas/usersSaga';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -13,7 +14,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const rootReducer = combineReducers({
-    usersReducer: usersReducer
+    usersReducer: usersReducer,
+    navigationReducer: navigationReducer
 });
 
 const store = createStore(

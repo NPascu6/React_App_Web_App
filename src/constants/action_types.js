@@ -12,3 +12,5 @@ export const DELETE_USER_FAILED = "DELETE_USER_FAILED";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+
+export const CHANGE_TAB = "CHANGE_TAB";

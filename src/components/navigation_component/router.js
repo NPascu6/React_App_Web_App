@@ -15,7 +15,7 @@ const routing = (
             <Card>
                 <Card.Body>
                     <Route exact path="/" component={Login} />
-                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/home" component={Home}/>
                     <Route exact path="/users" component={Users} />
                 </Card.Body>
                  <ErrorScreen />

@@ -19,6 +19,7 @@ const initialState = {
     userAdded: false,
     userUpdated: false,
     userDeleted: false,
+    usersReceived: false
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -39,6 +40,7 @@ const usersReducer = (state = initialState, action) => {
         case GET_USERS_SUCCESS:
             return {
                 ...state,
+                usersReceived: true,
                 users: action.payload.recordset
             }
 
