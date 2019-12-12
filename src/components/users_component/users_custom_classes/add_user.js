@@ -36,7 +36,7 @@ class AddUser extends Component {
         }
         this.props.addUser(user);
         parseInt(user.RoleName) === 1 ? user.RoleName = 'admin' : user.RoleName = 'user';
-        this.props.data.push(user);
+        this.props.filteredUsers.push(user)
     }
 
     render() {

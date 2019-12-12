@@ -72,14 +72,15 @@ class Users extends Component {
   addUser = (user) => {
     this.props.addUser(user);
     this.setState({
-      isAddMode: false,
-      filteredUsers: this.state.filteredUsers.push(user)
+      isAddMode: false
     });
   }
 
   editUser = (user) => {
     this.props.editUser(user);
-    this.setState({ isEditMode: false })
+    this.setState({
+      isEditMode: false
+    })
   }
 
   filterTable = (filter) => {
@@ -114,7 +115,7 @@ class Users extends Component {
           {
             this.state.isAddMode ?
               <AddUser
-                data={this.state.filteredUsers}
+                filteredUsers={this.state.filteredUsers}
                 addUser={this.addUser} />
               :
               !this.state.isEditMode ?
