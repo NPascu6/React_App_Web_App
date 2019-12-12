@@ -11,7 +11,7 @@ class UsersTable extends Component {
             <div>
                 {
                     !this.props.isAddMode && !this.props.isEditMode ?
-                        <Card>
+                        <Card style={{border: 'none'}}>
                             <Card.Body>
                                 <h1>React Users</h1>
                                 <SearchField

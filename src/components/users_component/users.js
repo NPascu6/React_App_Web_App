@@ -103,7 +103,7 @@ class Users extends Component {
           <Card>
             {
               this.state.isAddMode || this.state.isEditMode ?
-                <Button
+                <Button 
                   variant="success"
                   onClick={this.backToUserComponent}>Back to User List
               </Button>
@@ -121,7 +121,7 @@ class Users extends Component {
                   addUser={this.addUser} />
                 :
                 !this.state.isEditMode ?
-                  <UsersTable
+                  <UsersTable 
                     users={this.state.users}
                     filteredUsers={this.state.filteredUsers}
                     filterTable={this.filterTable}
