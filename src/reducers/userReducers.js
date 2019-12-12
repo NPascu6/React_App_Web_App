@@ -8,7 +8,8 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAILED,
     LOGIN_SUCCESS,
-    LOGIN_FAILED
+    LOGIN_FAILED,
+    LOGOUT
 
 } from '../constants/action_types'
 
@@ -24,6 +25,12 @@ const initialState = {
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
+        case LOGOUT:
+            return{
+                ...state,
+                isAuthenticated: false
+            }
+
         case LOGIN_SUCCESS:
             return {
                 ...state,

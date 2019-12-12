@@ -7,10 +7,9 @@ const initialState = {
     nextTab: 'Users'
 };
 
-const usersReducer = (state = initialState, action) => {
+const navigationReducer = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_TAB:
-            debugger;
             return {
                 ...state,
                 isActive: !state.isActive,
@@ -22,4 +21,4 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export default usersReducer;
+export default navigationReducer;

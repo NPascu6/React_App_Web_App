@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Card, Container } from 'react-bootstrap';
 import { loginAction } from '../../actions';
 import { connect } from "react-redux";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
@@ -17,26 +17,21 @@ class Login extends Component {
         }
     }
 
-    login = () =>{
+    login = () => {
         let userCredentials = {
             userName: this.state.userName,
             email: this.state.email,
             password: this.state.password
         }
 
-        this.props.login(userCredentials)
+        this.props.login(userCredentials);
     }
 
-    componentDidUpdate(previousProps) {
-        if (this.props.isAuthenticated !== previousProps.isAuthenticated) {
-          this.setState({ isAuthenticated: this.props.isAuthenticated });
-        }
-      }
-
     render() {
-        if (this.state.isAuthenticated === true) {
+        const  isAuthenticated  = this.props.isAuthenticated
+        if (isAuthenticated === true) {
             return <Redirect to='/users' />
-          }
+        }
         return (
             <Container>
                 <Card>

@@ -14,3 +14,4 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 
 export const CHANGE_TAB = "CHANGE_TAB";
+export const LOGOUT = "LOGOUT";

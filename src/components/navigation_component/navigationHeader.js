@@ -3,25 +3,23 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { changeTabAction } from '../../actions/navigationActions';
 import LogoutComponent from '../custom_components/logoutComponent';
+import styles from '../../styles/navigation';
 
 class NavigationHeader extends Component {
 
     changeTab = (action) => {
-        debugger;
         let nextTab = action.target.innerText;
-
         this.props.changeTab(nextTab)
     }
 
     render() {
-        debugger;
         return (
             <ul className="nav nav-tabs">
-                <li onClick={this.changeTab}>
-                    <Link to="/home" href="/" style={{ border: this.props.isActive === false ? '1px solid' : 'none' }} >Home</Link>
+                <li onClick={this.props.nextTab === "Users" ? this.changeTab : null}>
+                    <Link to="/home" href="/" style={ this.props.isActive === true ? styles.notActive : styles.active } >Home</Link>
                 </li>
-                <li onClick={this.changeTab}>
-                    <Link to="/users" href="/users" style={{ border: this.props.isActive === true ? '1px solid' : 'none' }}>Users</Link>
+                <li onClick={this.props.nextTab === "Home" ? this.changeTab : null}>
+                    <Link to="/users" href="/users" style={ this.props.isActive === true ? styles.active : styles.notActive }>Users</Link>
                 </li>
                 <li>
                     <LogoutComponent />

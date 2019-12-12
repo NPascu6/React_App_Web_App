@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card } from 'react-bootstrap';
-
+import { Redirect } from 'react-router-dom';
 import AddUser from './users_custom_classes/add_user';
 import EditUserModel from './users_custom_classes/edit_user_model';
 import UsersTable from './users_custom_classes/users_table';
@@ -96,58 +96,67 @@ class Users extends Component {
   }
 
   render() {
-    return (
-      <div className="container" >
-        <NavigationHeader />
-        <Card>
-          {
-            this.state.isAddMode || this.state.isEditMode ?
-              <Button
-                variant="success"
-                onClick={this.backToUserComponent}>Back to User List
+    if (this.props.isAuthenticated) {
+      return (
+        < div className="container" >
+          <NavigationHeader />
+          <Card>
+            {
+              this.state.isAddMode || this.state.isEditMode ?
+                <Button
+                  variant="success"
+                  onClick={this.backToUserComponent}>Back to User List
               </Button>
-              :
-              <Button
-                variant="success"
-                onClick={this.enterAddComponent}>Add User
+                :
+                <Button
+                  style={{ width: '50%', float: 'right' }}
+                  variant="success"
+                  onClick={this.enterAddComponent}>Add User
           </Button>
-          }
-          {
-            this.state.isAddMode ?
-              <AddUser
-                filteredUsers={this.state.filteredUsers}
-                addUser={this.addUser} />
-              :
-              !this.state.isEditMode ?
-                <UsersTable
-                  users={this.state.users}
+            }
+            {
+              this.state.isAddMode ?
+                <AddUser
                   filteredUsers={this.state.filteredUsers}
-                  filterTable={this.filterTable}
-                  isEditMode={this.isEditMode}
-                  isAddMode={this.isAddMode}
-                  deleteUser={this.deleteUser}
-                  handleEditModel={this.enterEditComponent}
-                  updateData={this.updateData}
-                />
-                : null
+                  addUser={this.addUser} />
+                :
+                !this.state.isEditMode ?
+                  <UsersTable
+                    users={this.state.users}
+                    filteredUsers={this.state.filteredUsers}
+                    filterTable={this.filterTable}
+                    isEditMode={this.isEditMode}
+                    isAddMode={this.isAddMode}
+                    deleteUser={this.deleteUser}
+                    handleEditModel={this.enterEditComponent}
+                    updateData={this.updateData}
+                  />
+                  : null
+            }
+          </Card>
+          {
+            this.state.isEditMode ?
+              <EditUserModel
+                userModel={this.state.userModel}
+                editUser={this.editUser}
+                users={this.state.filteredUsers}
+              />
+              : null
           }
-        </Card>
-        {
-          this.state.isEditMode ?
-            <EditUserModel
-              userModel={this.state.userModel}
-              editUser={this.editUser}
-              users={this.state.filteredUsers}
-            />
-            : null
-        }
-      </div >
-    );
+        </div >
+      );
+    }
+    else {
+      return <Redirect to='/' />
+    }
   }
 }
 
 const mapStateToProps = (state) => {
-  return { users: state.usersReducer.users };
+  return {
+    users: state.usersReducer.users,
+    isAuthenticated: state.usersReducer.isAuthenticated
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
